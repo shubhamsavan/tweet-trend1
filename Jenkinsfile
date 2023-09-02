@@ -8,7 +8,7 @@ pipeline {
         PATH = "/opt/apache-maven-3.9.4/bin:$PATH"
     }
     stages {
-        stage("build") { // 'S' in 'Stage' should be lowercase
+        stage("build") {
             steps {
                 sh 'mvn clean deploy'
             }
@@ -19,9 +19,16 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('valaxy-sonarqube-server') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    script {
+                        def scannerCmd = "${scannerHome}/bin/sonar-scanner"
+                        def projectKey = "valaxy1_twittertrend"
+                        def projectName = "valaxy01"
+                        def organization = "valaxy1"
+                        sh "${scannerCmd} -Dsonar.projectKey=${projectKey} -Dsonar.projectName='${projectName}' -Dsonar.organization=${organization}"
+                    }
                 }
             }
         }
     }
 }
+
