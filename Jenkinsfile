@@ -4,16 +4,14 @@ pipeline {
             label 'maven'
         }
     }
-environment {
-    PATH = "/opt/apache-maven-3.9.4/bin:$PATH"
-}
+    environment {
+        PATH = "/opt/apache-maven-3.9.4/bin:$PATH"
+    }
     stages {
-        Stage("build") {
+        stage("build") { // 'S' in 'Stage' should be lowercase
             steps {
                 sh 'mvn clean deploy'
-
             }
         }
-       
     }
 }
