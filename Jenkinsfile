@@ -1,4 +1,3 @@
-
 pipeline {
     agent {
         node {
@@ -9,12 +8,21 @@ pipeline {
         PATH = "/opt/apache-maven-3.9.4/bin:$PATH"
     }
     stages {
-        stage("build") { // 'S' in 'Stage' should be lowercase
+        stage("Build") {
             steps {
-                sh 'mvn clean deploy'
+                echo "----------- Build started ----------"
+                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                echo "----------- Build completed ----------"
             }
         }
-        stage('SonarQube analysis') {
+        stage("Unit Tests") {
+            steps {
+                echo "----------- Unit tests started ----------"
+                sh 'mvn surefire-report:report'
+                echo "----------- Unit tests completed ----------"
+            }
+        }
+        stage('SonarQube Analysis') {
             environment {
                 scannerHome = tool 'valaxy-sonar-scanner'
             }
@@ -26,3 +34,4 @@ pipeline {
         }
     }
 }
+
