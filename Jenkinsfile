@@ -98,7 +98,7 @@ pipeline {
         script {
             sh 'ls -l'  // List files and permissions for debugging
             sh 'whoami'  // Print the current user for debugging
-            sh 'sudo ./deploy.sh'
+            sh ' ./deploy.sh'
         }
      }
     }
