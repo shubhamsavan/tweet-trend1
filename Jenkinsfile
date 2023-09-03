@@ -94,13 +94,14 @@ pipeline {
         }
     } 
         stage("Deploy") {
-      steps {
+    steps {
         script {
+            sh 'chmod +x deploy.sh' 
             sh 'ls -l'  // List files and permissions for debugging
             sh 'whoami'  // Print the current user for debugging
-            sh ' ./deploy.sh'
+            sh 'sudo ./deploy.sh'
+            }
         }
      }
-    }
     }
 }
